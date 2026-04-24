@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 日报 - 首页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            color: #333;
+            margin: 30px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .link-card {
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .link-card:hover {
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .link-card h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .link-card p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .link-card a {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .link-card a:hover {
+            background: #5568d3;
+        }
+        
+        .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        
+        .update-time {
+            font-size: 13px;
+            color: #999;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI 日报</h1>
+            <p>每日 9 点自动更新的 AI 早报，收录官方可验证的真实 AI 新闻</p>
+        </div>
+        
+        <div class="content">
+            <div class="section-title">📅 最新日报</div>
+            
+            <div class="link-card">
+                <h3>📰 2026-04-24 日报</h3>
+                <p>V2 优化版 | 来源优先级标识 + 分段生成 + 数据透明化</p>
+                <a href="archive/2026-04/v2_2026-04-24.html" target="_blank">🔗 查看日报</a>
+            </div>
+            
+            <div class="section-title">📚 历史归档</div>
+            
+            <div class="link-card">
+                <h3>📂 归档目录</h3>
+                <p>按月份归档，方便查找历史日报</p>
+                <a href="archive/" target="_blank">📁 浏览归档</a>
+            </div>
+            
+            <div class="section-title">ℹ️ 关于</div>
+            
+            <div class="link-card">
+                <h3>🔧 项目信息</h3>
+                <p>自动采集、验证、生成 AI 新闻早报</p>
+                <p>数据来源：The Verge, Hacker News, GitHub Trending, 官方博客</p>
+                <p>验证方式：官方可验证链接 + 时间戳确认 + 多源交叉验证</p>
+                <a href="https://github.com/Donna622520/ai-daily-report" target="_blank">📂 GitHub 仓库</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>🚀 AI 日报 V2 优化版</p>
+            <p class="update-time">最后更新：2026-04-24 20:24:57</p>
+        </div>
+    </div>
+</body>
+</html>
