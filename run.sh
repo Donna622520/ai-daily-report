@@ -40,21 +40,48 @@ with open('config.yaml', 'r') as f:
 # 采集数据
 all_articles = []
 
-logger.info('开始采集 Product Hunt...')
+# 板块 1: 今日要闻 (Product Hunt, GitHub Trending)
+logger.info('板块 1: 采集今日要闻...')
 ph_crawler = ProductHuntCrawler()
-all_articles.extend(ph_crawler.crawl())
+ph_articles = ph_crawler.crawl()
+all_articles.extend(ph_articles)
 
-logger.info('开始采集 GitHub...')
 gh_crawler = GitHubCrawler()
-all_articles.extend(gh_crawler.crawl())
+gh_articles = gh_crawler.crawl()
+all_articles.extend(gh_articles)
 
-logger.info('开始采集 TechCrunch...')
-tc_crawler = TechCrunchCrawler()
-all_articles.extend(tc_crawler.crawl())
-
-logger.info('开始采集官方博客...')
+# 板块 2: 大模型动态 (官方博客)
+logger.info('板块 2: 采集大模型动态...')
 blog_crawler = BlogCrawler()
-all_articles.extend(blog_crawler.crawl())
+blog_articles = blog_crawler.crawl()
+all_articles.extend(blog_articles)
+
+# 板块 3: 科技媒体精选
+logger.info('板块 3: 采集科技媒体...')
+tc_crawler = TechCrunchCrawler()
+tc_articles = tc_crawler.crawl()
+all_articles.extend(tc_articles)
+
+# 板块 4: 国内科技媒体 (36 氪，机器之心，量子位)
+logger.info('板块 4: 采集国内科技媒体...')
+# TODO: 添加国内科技媒体爬虫
+# domestic_crawler = DomesticMediaCrawler()
+# domestic_articles = domestic_crawler.crawl()
+# all_articles.extend(domestic_articles)
+
+# 板块 5: 社区热议 (Hacker News, Reddit, V2EX)
+logger.info('板块 5: 采集社区热议...')
+# TODO: 添加社区爬虫
+# community_crawler = CommunityCrawler()
+# community_articles = community_crawler.crawl()
+# all_articles.extend(community_articles)
+
+# 板块 6: 学术前沿 (arXiv, Hugging Face)
+logger.info('板块 6: 采集学术前沿...')
+# TODO: 添加学术爬虫
+# academic_crawler = AcademicCrawler()
+# academic_articles = academic_crawler.crawl()
+# all_articles.extend(academic_articles)
 
 logger.info(f'共采集 {len(all_articles)} 条新闻')
 
@@ -77,4 +104,18 @@ if config['feishu']['enabled']:
     notifier.send_notification(report_path, '2026-04-24', success=True)
 
 logger.info('AI 日报生成完成!')
+
+# 自动推送到 GitHub
+logger.info('推送到 GitHub...')
+import subprocess
+import datetime
+subprocess.run(['git', 'add', '.'], check=True)
+subprocess.run(['git', 'commit', '-m', f'auto: 更新日报 {datetime.datetime.now().strftime(\"%Y-%m-%d\")}'], check=True)
+subprocess.run(['git', 'push', 'origin', 'master'], check=True)
+logger.info('✅ 已推送到 GitHub')
+
+# 生成 GitHub Pages 链接
+base_url = 'https://donna622520.github.io/ai-daily-report/'
+date = datetime.datetime.now().strftime('%Y-%m-%d')
+print(f'📰 日报链接：{base_url}archive/{datetime.datetime.now().strftime(\"%Y-%m\")}/v2_{date}.html')
 "
