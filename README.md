@@ -182,6 +182,22 @@ cp config.yaml config-backup.yaml
 - **定时任务**: cron
 - **通知**: 飞书 send_message 工具
 
+
+## GitHub Pages
+
+日报已部署到 GitHub Pages，可直接在浏览器中查看：
+
+- **首页**: https://donna622520.github.io/ai-daily-report/
+- **最新日报**: https://donna622520.github.io/ai-daily-report/archive/2026-04/v2_2026-04-24.html
+- **历史归档**: https://donna622520.github.io/ai-daily-report/archive/
+
+### 配置方式
+
+GitHub Pages 已启用，自动从 `master` 分支部署。
+
+访问链接：`https://<你的用户名>.github.io/<仓库名>/`
+
+---
 ## 版本历史
 
 - **V2-0424**: 标准版本 - 来源优先级标识 + 分段生成 + 数据透明化
