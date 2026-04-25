@@ -1,7 +1,7 @@
 #!/bin/bash
 # AI 日报运行脚本
 
-cd /home/donna/Hermes/workspace/projects/ai-daily-report-V1-0424
+cd /home/donna/Hermes/workspace/projects/ai-daily-report
 
 # 创建 logs 目录
 mkdir -p logs
@@ -15,11 +15,15 @@ from crawler.product_hunt import ProductHuntCrawler
 from crawler.github import GitHubCrawler
 from crawler.techcrunch import TechCrunchCrawler
 from crawler.blog import BlogCrawler
+from crawler.arstechnica import ArstechnicaCrawler
 from crawler.verifier import Verifier
 from generator.report import ReportGenerator
 from notifier.feishu import FeishuNotifier
 import logging
 import yaml
+import os
+import datetime
+import subprocess
 
 # 配置日志
 logging.basicConfig(
@@ -61,6 +65,12 @@ logger.info('板块 3: 采集科技媒体...')
 tc_crawler = TechCrunchCrawler()
 tc_articles = tc_crawler.crawl()
 all_articles.extend(tc_articles)
+
+# 板块 3.5: 英文科技媒体 (Ars Technica)
+logger.info('板块 3.5: 采集 Ars Technica...')
+at_crawler = ArstechnicaCrawler()
+at_articles = at_crawler.fetch()
+all_articles.extend(at_articles)
 
 # 板块 4: 国内科技媒体 (36 氪，机器之心，量子位)
 logger.info('板块 4: 采集国内科技媒体...')
@@ -105,25 +115,24 @@ version = config.get('version', {}).get('number', 'v3')
 report_path = generator.generate_report(verified_articles, version=version)
 
 # 验证版本号一致性
-expected_filename = f"{version}_{date}.html"
+date_str = datetime.datetime.now().strftime('%Y-%m-%d')
+expected_filename = f'{version}_{date_str}.html'
 actual_filename = os.path.basename(report_path)
 if expected_filename != actual_filename:
-    logger.error(f"版本号不一致！期望：{expected_filename}, 实际：{actual_filename}")
-    raise ValueError(f"版本号验证失败：期望 {expected_filename}, 实际 {actual_filename}")
+    logger.error(f'版本号不一致！期望：{expected_filename}, 实际：{actual_filename}')
+    raise ValueError(f'版本号验证失败：期望 {expected_filename}, 实际 {actual_filename}')
 else:
-    logger.info(f"✅ 版本号验证通过：{actual_filename}")
+    logger.info(f'✅ 版本号验证通过：{actual_filename}')
 
 # 发送通知
 if config['feishu']['enabled']:
     notifier = FeishuNotifier()
-    notifier.send_notification(report_path, date, success=True, news_count=len(verified_articles))
+    notifier.send_notification(report_path, date_str, success=True, news_count=len(verified_articles))
 
 logger.info('AI 日报生成完成!')
 
 # 自动推送到 GitHub
 logger.info('推送到 GitHub...')
-import subprocess
-import datetime
 subprocess.run(['git', 'add', '.'], check=True)
 subprocess.run(['git', 'commit', '-m', f'auto: 更新日报 {datetime.datetime.now().strftime(\"%Y-%m-%d\")}'], check=True)
 subprocess.run(['git', 'push', 'origin', 'master'], check=True)

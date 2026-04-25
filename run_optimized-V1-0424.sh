@@ -5,7 +5,7 @@
 
 set -e
 
-PROJECT_DIR="/home/donna/Hermes/workspace/projects/ai-daily-report-V1-0424"
+PROJECT_DIR="/home/donna/Hermes/workspace/projects/ai-daily-report"
 cd "$PROJECT_DIR"
 
 # 创建日志目录
