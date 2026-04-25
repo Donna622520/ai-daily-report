@@ -57,10 +57,20 @@ class Verifier:
         verified = []
         
         for article in articles:
-            # 验证日期
-            if not self.verify_date(article.get('date', '')):
-                logger.warning(f"日期验证失败：{article['title']}")
+            date = article.get('date', '')
+            
+            # 放宽验证规则：允许无明确日期的新闻
+            # 只过滤明显谣言（如"Tim Cook 卸任"）
+            title = article['title'].lower()
+            if 'stepping down' in title or 'resign' in title or 'quit' in title:
+                logger.warning(f"过滤明显谣言：{article['title']}")
                 continue
+            
+            # 日期验证失败但标题正常，仍然保留
+            if not self.verify_date(date):
+                logger.info(f"日期验证失败，但保留新闻：{article['title']}")
+                # 添加默认日期（今天）
+                article['date'] = datetime.now().strftime('%Y-%m-%d')
             
             # 检查重复
             if self.is_duplicate(article, verified):
