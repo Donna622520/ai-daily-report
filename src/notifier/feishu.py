@@ -19,8 +19,13 @@ class FeishuNotifier:
     def send_notification(self, report_path: str, date: str, success: bool = True, news_count: int = 0):
         """发送通知"""
         
+        # 从文件名中提取版本号
+        import re
+        version_match = re.search(r'v(\d+)', report_path)
+        version = version_match.group(1) if version_match else '3'
+        
         if success:
-            message = f"""🤖 **AI 日报 V3 已生成**
+            message = f"""🤖 **AI 日报 V{version} 已生成**
 
 📅 **日期**: {date}
 
@@ -38,7 +43,7 @@ class FeishuNotifier:
 
 📄 **报告链接**: [查看日报](https://github.com/Donna622520/ai-daily-report/blob/master/{report_path})
 
-🔧 **V3 优化**:
+🔧 **V{version} 优化**:
 - 6 个板块结构
 - 未找到板块明确标注
 - 飞书消息格式优化"""

@@ -16,7 +16,7 @@ class ReportGenerator:
     def __init__(self, archive_path: str = "archive"):
         self.archive_path = archive_path
     
-    def generate_report(self, articles: list, date: str = None, sections: dict = None) -> str:
+    def generate_report(self, articles: list, date: str = None, sections: dict = None, version: str = None) -> str:
         """生成日报报告"""
         if not date:
             date = datetime.now().strftime('%Y-%m-%d')
@@ -25,8 +25,19 @@ class ReportGenerator:
         archive_dir = os.path.join(self.archive_path, date[:7])  # YYYY-MM
         os.makedirs(archive_dir, exist_ok=True)
         
-        # 生成文件名
-        filename = f"v2_{date}.html"
+        # 从配置读取版本号，如果没有传入则使用默认值
+        if not version:
+            try:
+                import yaml
+                with open('config.yaml', 'r', encoding='utf-8') as f:
+                    config = yaml.safe_load(f)
+                    version = config.get('version', {}).get('number', 'v3')
+            except Exception as e:
+                logger.warning(f"读取配置失败，使用默认版本号 v3: {e}")
+                version = 'v3'
+        
+        # 生成文件名：{version}_{date}.html
+        filename = f"{version}_{date}.html"
         filepath = os.path.join(archive_dir, filename)
         
         # 生成 HTML 内容

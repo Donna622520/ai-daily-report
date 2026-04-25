@@ -96,12 +96,27 @@ logger.info(f'验证后剩余 {len(verified_articles)} 条新闻')
 # 生成报告
 logger.info('生成报告...')
 generator = ReportGenerator()
-report_path = generator.generate_report(verified_articles)
+
+# 从配置读取版本号
+with open('config.yaml', 'r') as f:
+    config = yaml.safe_load(f)
+version = config.get('version', {}).get('number', 'v3')
+
+report_path = generator.generate_report(verified_articles, version=version)
+
+# 验证版本号一致性
+expected_filename = f"{version}_{date}.html"
+actual_filename = os.path.basename(report_path)
+if expected_filename != actual_filename:
+    logger.error(f"版本号不一致！期望：{expected_filename}, 实际：{actual_filename}")
+    raise ValueError(f"版本号验证失败：期望 {expected_filename}, 实际 {actual_filename}")
+else:
+    logger.info(f"✅ 版本号验证通过：{actual_filename}")
 
 # 发送通知
 if config['feishu']['enabled']:
     notifier = FeishuNotifier()
-    notifier.send_notification(report_path, '2026-04-24', success=True)
+    notifier.send_notification(report_path, date, success=True, news_count=len(verified_articles))
 
 logger.info('AI 日报生成完成!')
 
@@ -116,6 +131,6 @@ logger.info('✅ 已推送到 GitHub')
 
 # 生成 GitHub Pages 链接
 base_url = 'https://donna622520.github.io/ai-daily-report/'
-date = datetime.datetime.now().strftime('%Y-%m-%d')
-print(f'📰 日报链接：{base_url}archive/{datetime.datetime.now().strftime(\"%Y-%m\")}/v2_{date}.html')
+today = datetime.datetime.now().strftime('%Y-%m-%d')
+print(f'📰 日报链接：{base_url}archive/{today[:7]}/{version}_{today}.html')
 "
