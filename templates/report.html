@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="styles/v4.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 头部信息 -->
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+            <h1 style="margin: 0 0 15px 0; font-size: 28px; font-weight: 700;">📰 AI 日报 V4</h1>
+            <div style="font-size: 14px; line-height: 1.8; opacity: 0.9;">
+                <p>📅 日期：{{ date }}</p>
+                <p>🕐 生成时间：{{ generate_time }}</p>
+                <p>📊 总新闻数：{{ total_news }} 条</p>
+            </div>
+        </div>
+        
+        <!-- 统计信息 -->
+        <div class="stats">
+            <strong>📊 数据统计</strong><br>
+            {% for section_name, news_list in sections.items() %}
+            - {{ section_name }}: {{ news_list|length }} 条<br>
+            {% endfor %}
+        </div>
+        
+        <!-- 9 大板块 -->
+        {% for section_name, news_list in sections.items() %}
+        <div class="section">
+            <h2>{{ section_titles.get(section_name, section_name) }}</h2>
+            
+            {% if news_list and news_list|length > 0 %}
+                {% for news in news_list %}
+                <div class="news-item">
+                    <div class="news-title">{{ news['标题'] }}</div>
+                    <div class="news-meta">
+                        <span>📅 {{ news['日期'] }}</span>
+                        <span>📰 {{ news['来源'] }}</span>
+                    </div>
+                    <div class="news-summary">
+                        <strong>一句话概括:</strong> {{ news['一句话概括'] }}
+                    </div>
+                    
+                    {% if news['关键词'] %}
+                    <div class="news-keywords">
+                        {% for keyword in news['关键词'] %}
+                        <span class="keyword-tag">{{ keyword }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <div class="news-takeaway">
+                        <strong>Takeaway:</strong> {{ news['Takeaway'] }}
+                    </div>
+                    
+                    {% if news['跨界融合'] %}
+                    <div class="news-fusion">
+                        <strong>跨界融合:</strong> {{ news['跨界融合'] }}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% else %}
+            <div class="empty-section">{{ section_titles.get(section_name, section_name) }}今日暂无新闻</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        
+        <!-- 底部 -->
+        <div class="footer">
+            <p>AI 日报 V4 - 自动生成</p>
+            <p>生成时间：{{ generate_time }}</p>
+            <p>遵循 9 大板块 + 7 字段规范</p>
+        </div>
+    </div>
+</body>
+</html>

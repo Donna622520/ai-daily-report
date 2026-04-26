@@ -1,0 +1,91 @@
+# AI 日报 UI 配置 V4
+# 基于配置化主题系统，支持快速调整样式
+
+ui:
+  theme: "modern-clean"
+  version: "4.0"
+  
+  # 颜色配置（CSS 变量）
+  colors:
+    primary: "#1a73e8"        # 主色（标题、链接）
+    secondary: "#34a853"      # 辅色（成功状态）
+    accent: "#fbbc04"         # 强调色（警告/注意）
+    background: "#f8f9fa"     # 页面背景
+    card: "#ffffff"           # 卡片背景
+    text: "#202124"           # 主要文字
+    muted: "#5f6368"          # 次要文字
+    border: "#dadce0"         # 边框色
+    
+    # 高亮区域背景色
+    highlight_takeaway: "#e8f5e9"    # Takeaway（绿色系）
+    highlight_fusion: "#fff8e1"      # 跨界融合（黄色系）
+    highlight_keyword: "#e3f2fd"     # 关键词（蓝色系）
+    highlight_source: "#fce8ec"      # 来源（粉色系）
+  
+  # 字体配置
+  typography:
+    font_family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    font_size_base: 16px
+    line_height: 1.6
+    heading_weight: 700
+    letter_spacing: 0.02em
+    
+    # 字号层级（符合阅读习惯）
+    sizes:
+      h1: 28px      # 主标题
+      h2: 22px      # 板块标题
+      h3: 18px      # 新闻标题
+      body: 16px    # 正文
+      meta: 14px    # 元数据
+      small: 12px   # 辅助信息
+  
+  # 布局配置（基于易读性研究）
+  layout:
+    max_width: 800px          # 最佳阅读宽度（60-75 字符/行）
+    padding: 24px
+    padding_mobile: 16px
+    card_shadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)"
+    card_shadow_hover: "0 3px 6px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.31)"
+    border_radius: 12px
+    section_margin: 24px
+    
+    # 卡片内边距
+    card_padding: 20px
+    card_gap: 16px
+  
+  # 视觉层次配置
+  emphasis:
+    # 标题层级
+    title_icon_size: 20px
+    title_weight: 700
+    title_color: "#202124"
+    
+    # 元数据
+    meta_color: "#5f6368"
+    meta_size: 14px
+    meta_spacing: 12px
+    
+    # 高亮区域
+    highlight_padding: 12px
+    highlight_radius: 8px
+    highlight_border_left: "4px solid"
+    
+    # 关键词标签
+    keyword_bg: "#e3f2fd"
+    keyword_color: "#1967d2"
+    keyword_radius: 4px
+    keyword_padding: "4px 10px"
+  
+  # 交互效果
+  interactions:
+    card_hover: true
+    card_scale: 1.01
+    transition_duration: "0.2s"
+    transition_easing: "ease-in-out"
+  
+  # 响应式配置
+  responsive:
+    mobile_max_width: 480px
+    tablet_max_width: 768px
+    breakpoint_mobile: 600px
+    breakpoint_tablet: 900px
