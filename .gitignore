@@ -1,16 +1,53 @@
-
+# Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.so
 .Python
 env/
 venv/
-*.egg-info/
-dist/
+ENV/
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Logs
+logs/
 *.log
+
+# Config (敏感配置)
+config.yaml
+
+# Archive (日报文件需要上传，但排除临时文件)
+archive/2026-04/v2_part*.html
+archive/2026-04/report_part*.html
+
+# 临时文件
+*.tmp
+*.temp
+
+# AI 日报 V4 特定
 reports/archive/*.html
 /tmp/*
-
