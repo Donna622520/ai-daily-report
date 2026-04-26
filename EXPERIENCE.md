@@ -235,6 +235,57 @@ ls -l /tmp/news_*.json
 ---
 ## 失败教训记录
 
+### 教训 6：Git 推送认证失败
+
+**场景**：
+直接 `git push` 时遇到认证问题（"could not read Username"）。
+
+**错误行为**：
+- 尝试网页认证（失败）
+- 配置 SSH Key（复杂且不需要）
+- 禁用 credential helper（临时方案）
+- 多次尝试不同方法
+
+**问题发现**：
+- 浪费时间尝试多种方法
+- 每次都要重新摸索流程
+- 没有标准化的解决方案
+
+**正确做法**：
+1. 使用 `github-push-success` 技能（已固化）
+2. 按标准流程执行：克隆 → 复制 → 提交 → Token URL → 推送
+3. 不再尝试其他方法
+
+**实施步骤**：
+```bash
+# 调用 github-push-success 技能
+# 或直接执行标准流程：
+temp_dir="/tmp/ai-daily-report-temp"
+rm -rf "$temp_dir"
+mkdir -p "$temp_dir"
+cd "$temp_dir"
+git clone https://github.com/Donna622520/ai-daily-report.git
+cp -r /home/donna/Hermes/workspace/projects/ai-daily-report-V4-0426/* "$temp_dir/ai-daily-report/"
+cd "$temp_dir/ai-daily-report"
+git config user.email "donna@example.com"
+git config user.name "Donna"
+git add .
+git commit -m "feat: 描述本次提交"
+git remote set-url origin https://Donna622520:$GITHUB_TOKEN@github.com/Donna622520/ai-daily-report.git
+GIT_TERMINAL_PROMPT=0 git push origin main
+rm -rf "$temp_dir"
+```
+
+**改进措施**：
+- ✅ 已创建 `github-push-success` 技能（`/home/donna/.hermes/skills/devops/github-push-success/SKILL.md`）
+- ✅ 在资源库.md 中记录技能入口
+- ✅ 遇到问题先搜索技能，不再盲目尝试
+
+**相关技能**：
+- 📚 [github-push-success](file:///home/donna/.hermes/skills/devops/github-push-success/SKILL.md) - GitHub 推送标准流程
+
+---
+
 ### 教训 1：不要忽略历史经验
 
 **场景**：
